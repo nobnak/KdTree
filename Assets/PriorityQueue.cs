@@ -72,20 +72,55 @@ public class PriorityQueue<T> : IEnumerable<T> where T : System.IComparable<T> {
 	#endregion
 }
 
-public class FixedSizePriorityQueue<T> : PriorityQueue<T> where T : System.IComparable<T> {
-	private int _size;
+public class FixedSizePriorityQueue<T> : IEnumerable<T> where T : System.IComparable<T> {
+	private T[] _queue;
+	private int _count;
 	
-	public FixedSizePriorityQueue(int size) : base() {
-		_size = size;
+	public FixedSizePriorityQueue(int size) {
+		_queue = new T[size];
+		_count = 0;
 	}
-	public override void resize(int size) {
-		_size = size;
-		base.resize(size);
-	}
-	public override void enqueue(T newNode) {
-		if (queue.Count > _size && newNode.CompareTo(queue[0]) > 0)
+	public void enqueue(T newNode) {
+		var iInsert = 0;
+		for (; iInsert < _count; iInsert++) {
+			if (newNode.CompareTo(_queue[iInsert]) >= 0)
+				break;
+		}
+		if (_count < _queue.Length) {
+			var movementLength = _count - iInsert;
+			if (movementLength > 0)
+				System.Array.Copy(_queue, iInsert, _queue, iInsert+1, movementLength);
+			_count++;
+		} else if (iInsert == 0) {
 			return;
-		base.enqueue(newNode);
-		base.resize(_size);
+		} else {
+			System.Array.Copy(_queue, 0, _queue, 1, _count-1);
+			iInsert--;
+		}
+		_queue[iInsert] = newNode;
 	}
+	public T head() { 
+		return _queue[0]; 
+	}
+	public void reset() { 
+		_count = 0; 
+	}
+	public void resize(int size) {
+		if (_queue.Length != size)
+			_queue = new T[size];
+	}
+
+	#region IEnumerable[T] implementation
+	public IEnumerator<T> GetEnumerator () {
+		for (int i = 0; i < _count; i++)
+			yield return _queue[i];
+	}
+	#endregion
+
+	#region IEnumerable implementation
+	System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator () {
+		for (int i = 0; i < _count; i++)
+			yield return _queue[i];
+	}
+	#endregion
 }
