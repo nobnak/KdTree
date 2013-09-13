@@ -251,7 +251,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     startSpeed:
-      scalar: 5
+      scalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -443,12 +443,12 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    gravityModifier: .100000001
+    gravityModifier: 0
     inheritVelocity: 0
     maxNumParticles: 1000
   ShapeModule:
     serializedVersion: 2
-    enabled: 1
+    enabled: 0
     type: 4
     radius: 1
     angle: 90
@@ -463,7 +463,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 30
+      scalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -714,7 +714,7 @@ ParticleSystem:
   VelocityModule:
     enabled: 0
     x:
-      scalar: 10
+      scalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1258,7 +1258,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 635724385}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -.270598054, y: .65328151, z: .270598114, w: .653281391}
   m_LocalPosition: {x: .148336411, y: -1.73347569, z: .68341428}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1301,7 +1301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d6691768bfe64102abb56046794cfcb, type: 3}
   m_Name: 
   kNumber: 3
-  modulation: .100000001
+  modulation: .5
   modRadius: 1
   target:
     shuriken: {fileID: 1457610550}

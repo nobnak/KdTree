@@ -1,16 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/PriorityQueue.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/KNN.cs">
     <Files>
-      <File FileName="Assets/PriorityQueue.cs" Line="98" Column="14" />
-      <File FileName="Assets/KNN.cs" Line="9" Column="1" />
+      <File FileName="Assets/PriorityQueue.cs" Line="85" Column="40" />
+      <File FileName="Assets/KNN.cs" Line="106" Column="21" />
+      <File FileName="Assets/NeighborColoring.cs" Line="29" Column="45" />
+      <File FileName="Assets/Modulator.cs" Line="32" Column="9" />
+      <File FileName="Assets/QuickSort.cs" Line="21" Column="57" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="PriorityQueue.cs" selected="True" />
+              <Node name="KNN.cs" selected="True" />
             </Node>
           </Node>
         </State>

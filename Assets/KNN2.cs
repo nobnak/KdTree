@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Nobnak.Extension;
 
-public class KNN {
-	public Vector3[] points { get; private set; }
-	public int[] ids { get; private set; }
+public class KNN2 {
+	public Entity[] points { get; private set; }
 	private Point _root;
 	private FixedSizePriorityQueue<PriorityPoint> _priQueue;
 	
-	public void build(Vector3[] points, int[] ids) {
+	public void build(Entity[] points) {
 		this.points = points;
-		this.ids = ids;
 		_root = build(0, points.Length, 0);
 		_priQueue = new FixedSizePriorityQueue<PriorityPoint>(0);
 	}
@@ -19,7 +17,7 @@ public class KNN {
 		if (length == 0)
 			return null;
 		int axis = depth % 3;
-		System.Array.Sort<Vector3, int>(points, ids, offset, length, COMPS[axis]);
+		System.Array.Sort(points, offset, length, COMPS[axis]);
 		int mid = length >> 1;
 		return new Point(){ mid = offset + mid,
 			smaller = build(offset, mid, depth+1), 
@@ -31,13 +29,13 @@ public class KNN {
 		_priQueue.resize(k);
 		_priQueue.enqueue(new PriorityPoint(-1, float.PositiveInfinity));
 		knearest(point, _root, 0);
-		return (from node in _priQueue.Reverse() where node.ipos >= 0 select ids[node.ipos]).ToArray();
+		return (from node in _priQueue.Reverse() where node.ipos >= 0 select points[node.ipos].id).ToArray();
 	}
 	private void knearest(Vector3 point, Point p, int depth) {
 		if (p == null)
 			return;
 		var axis = depth % 3;
-		var distOnAxis = points[p.mid][axis] - point[axis];
+		var distOnAxis = points[p.mid].pos[axis] - point[axis];
 		if (distOnAxis > 0) {
 			knearest(point, p.smaller, depth+1);
 			var sqDist2leaf = sqDist (point, _priQueue.head().ipos);
@@ -54,7 +52,7 @@ public class KNN {
 	private float sqDist(Vector3 point, int index) {
 		if (index == -1)
 			return float.PositiveInfinity;
-		var dist = point - points[index];
+		var dist = point - points[index].pos;
 		return dist.sqrMagnitude;
 	}
 	private int closer(Vector3 point, int i0, int i1) {
@@ -71,17 +69,17 @@ public class KNN {
 		public Point larger;
 	}
 
-	private static readonly IComparer<Vector3>[] COMPS;
-	static KNN() {
-		COMPS = new IComparer<Vector3>[]{ new AxisComparer(0), new AxisComparer(1), new AxisComparer(2)	};
+	private static readonly IComparer<Entity>[] COMPS;
+	static KNN2() {
+		COMPS = new IComparer<Entity>[]{ new AxisComparer(0), new AxisComparer(1), new AxisComparer(2)	};
 	}
-	private class AxisComparer : IComparer<Vector3> {
+	private class AxisComparer : IComparer<Entity> {
 		private int _axis;
 		public AxisComparer(int axis) {
 			_axis = axis;
 		}
-		public int Compare(Vector3 p0, Vector3 p1) {
-			return p0[_axis] > p1[_axis] ? +1 : (p0[_axis] < p1[_axis] ? -1 : 0);
+		public int Compare(Entity p0, Entity p1) {
+			return p0.pos[_axis] > p1.pos[_axis] ? +1 : (p0.pos[_axis] < p1.pos[_axis] ? -1 : 0);
 		}
 	}
 	private class PriorityPoint : System.IComparable<PriorityPoint> {
@@ -106,5 +104,10 @@ public class KNN {
 	public class Entity {
 		public Vector3 pos;
 		public int id;
+		
+		public Entity(Vector3 pos, int id) {
+			this.pos = pos;
+			this.id = id;
+		}
 	}
 }

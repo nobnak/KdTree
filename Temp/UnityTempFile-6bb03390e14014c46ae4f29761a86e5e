@@ -29,9 +29,11 @@
 -define:ENABLE_PROFILER
 -define:UNITY_EDITOR
 'Assets/KNN.cs'
+'Assets/KNN2.cs'
 'Assets/KdTree.cs'
 'Assets/Modulator.cs'
 'Assets/NeighborColoring.cs'
 'Assets/ParticleData.cs'
 'Assets/PriorityQueue.cs'
+'Assets/QuickSort.cs'
 'Assets/Viscosity.cs'

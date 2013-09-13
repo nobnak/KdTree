@@ -91,11 +91,12 @@ public class FixedSizePriorityQueue<T> : IEnumerable<T> where T : System.ICompar
 			if (movementLength > 0)
 				System.Array.Copy(_queue, iInsert, _queue, iInsert+1, movementLength);
 			_count++;
-		} else if (iInsert == 0) {
+		} else if (iInsert-- == 0) {
 			return;
 		} else {
-			System.Array.Copy(_queue, 0, _queue, 1, _count-1);
-			iInsert--;
+			var movementLength = iInsert;
+			if (movementLength > 0)
+				System.Array.Copy(_queue, 1, _queue, 0, movementLength);
 		}
 		_queue[iInsert] = newNode;
 	}
