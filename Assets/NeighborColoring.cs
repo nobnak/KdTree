@@ -23,8 +23,9 @@ public class NeighborColoring : MonoBehaviour {
 		var points = targetParticles.Where((p, j) => j < nTargetParticles).Select(p => p.position).ToArray();
 		_knn.build(points, Enumerable.Range(0, points.Length).ToArray());
 		
+		var startColor = target.shuriken.startColor;
 		for (int i = 0; i < nTargetParticles; i++)
-			targetParticles[i].color = Color.white;
+			targetParticles[i].color = startColor;
 		foreach (var c in centers) {
 			var targetIndices = _knn.knearest(c.pos.position, c.nFriends);
 			foreach (var iTarget in targetIndices)

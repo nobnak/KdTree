@@ -291,10 +291,10 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4294967295
+        rgba: 50331647
       minMaxState: 0
     startSize:
-      scalar: 1
+      scalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1433,17 +1433,17 @@ MonoBehaviour:
     shuriken: {fileID: 587421964}
   centers:
   - pos: {fileID: 912089169}
-    nFriends: 200
+    nFriends: 100
     color: {r: 0, g: .239554405, b: 1, a: 1}
   - pos: {fileID: 1027643876}
-    nFriends: 200
+    nFriends: 100
     color: {r: 0, g: 0, b: 0, a: 1}
   - pos: {fileID: 113862826}
-    nFriends: 200
+    nFriends: 100
     color: {r: 1, g: 0, b: 0, a: 1}
   - pos: {fileID: 1125845169}
-    nFriends: 200
+    nFriends: 100
     color: {r: 1, g: .986072421, b: 0, a: 1}
   - pos: {fileID: 1351346050}
-    nFriends: 200
+    nFriends: 100
     color: {r: 0, g: 1, b: .122562647, a: 1}
