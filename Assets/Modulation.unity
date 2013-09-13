@@ -448,12 +448,12 @@ ParticleSystem:
     maxNumParticles: 1000
   ShapeModule:
     serializedVersion: 2
-    enabled: 0
-    type: 4
+    enabled: 1
+    type: 5
     radius: 1
     angle: 90
     length: 5
-    boxX: 20
+    boxX: 0
     boxY: 10
     boxZ: 0
     placementMode: 0
@@ -1259,7 +1259,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 635724385}
   m_LocalRotation: {x: -.270598054, y: .65328151, z: .270598114, w: .653281391}
-  m_LocalPosition: {x: .148336411, y: -1.73347569, z: .68341428}
+  m_LocalPosition: {x: -14.5997601, y: -23.0028419, z: .68341428}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -29,7 +29,7 @@ public class NeighborColoring : MonoBehaviour {
 		for (int i = 0; i < nTargetParticles; i++)
 			targetParticles[i].color = Color.white;
 		foreach (var iTarget in targetIndices)
-			targetParticles[iTarget].color = Color.green;
+			targetParticles[iTarget].color = Color.red;
 		
 		target.SetParticles(targetParticles, nTargetParticles);
 	}
