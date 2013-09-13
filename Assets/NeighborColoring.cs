@@ -3,10 +3,8 @@ using System.Collections;
 using System.Linq;
 
 public class NeighborColoring : MonoBehaviour {
-	public int kNumber = 10;
-	
 	public ParticleData target;
-	public Transform center;
+	public Center[] centers;
 	
 	private KNN _knn;
 
@@ -25,12 +23,21 @@ public class NeighborColoring : MonoBehaviour {
 		var points = targetParticles.Where((p, j) => j < nTargetParticles).Select(p => p.position).ToArray();
 		_knn.build(points, Enumerable.Range(0, points.Length).ToArray());
 		
-		var targetIndices = _knn.knearest(center.position, kNumber);
 		for (int i = 0; i < nTargetParticles; i++)
 			targetParticles[i].color = Color.white;
-		foreach (var iTarget in targetIndices)
-			targetParticles[iTarget].color = Color.red;
+		foreach (var c in centers) {
+			var targetIndices = _knn.knearest(c.pos.position, c.nFriends);
+			foreach (var iTarget in targetIndices)
+				targetParticles[iTarget].color = c.color;
+		}
 		
 		target.SetParticles(targetParticles, nTargetParticles);
 	}
+}
+
+[System.Serializable]
+public class Center {
+	public Transform pos;
+	public int nFriends;
+	public Color color;
 }
