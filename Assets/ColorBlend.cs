@@ -33,10 +33,10 @@ public class ColorBlend : MonoBehaviour {
 		for (var iTarget = 0; iTarget < nTargetParticles; iTarget++) {
 			var color = targetParticles[iTarget].color;
 			targetParticles[iTarget].color = new Color32(
-				(byte)(color.r + 0.1f * startColor.r), 
-				(byte)(color.g + 0.1f * startColor.g),
-				(byte)(color.b + 0.1f * startColor.b),
-				(byte)(color.a + 0.1f * startColor.a));
+				(byte)(color.r + 0.11f * startColor.r), 
+				(byte)(color.g + 0.11f * startColor.g),
+				(byte)(color.b + 0.11f * startColor.b),
+				(byte)(color.a + 0.11f * startColor.a));
 		}
 		
 		var sqrModRadius = modRadius * modRadius;

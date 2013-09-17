@@ -30,7 +30,7 @@ public class NeighborColoring : MonoBehaviour {
 			var targetIndices = _knn.knearest(c.pos.position, c.nFriends);
 			var limit = targetIndices.Length;
 			var skips = (int)(0.9f * limit);
-			for (var i = skips; i < limit; i++) {
+			for (var i = 0; i < limit; i++) {
 				var iTarget = targetIndices[i];
 				targetParticles[iTarget].color = c.color;
 			}
