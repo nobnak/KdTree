@@ -44,6 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ColorBlend.cs" />
      <Compile Include="Assets\KNN.cs" />
      <Compile Include="Assets\KNN2.cs" />
      <Compile Include="Assets\KdTree.cs" />

@@ -4,7 +4,7 @@
     <Files>
       <File FileName="Assets/PriorityQueue.cs" Line="85" Column="40" />
       <File FileName="Assets/KNN.cs" Line="106" Column="21" />
-      <File FileName="Assets/NeighborColoring.cs" Line="28" Column="63" />
+      <File FileName="Assets/NeighborColoring.cs" Line="15" Column="2" />
       <File FileName="Assets/Modulator.cs" Line="32" Column="9" />
       <File FileName="Assets/QuickSort.cs" Line="21" Column="57" />
       <File FileName="Assets/KNN2.cs" Line="17" Column="19" />
