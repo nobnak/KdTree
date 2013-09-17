@@ -28,8 +28,12 @@ public class NeighborColoring : MonoBehaviour {
 			targetParticles[i].color = startColor;
 		foreach (var c in centers) {
 			var targetIndices = _knn.knearest(c.pos.position, c.nFriends);
-			foreach (var iTarget in targetIndices)
+			var limit = targetIndices.Length;
+			var skips = (int)(0.9f * limit);
+			for (var i = skips; i < limit; i++) {
+				var iTarget = targetIndices[i];
 				targetParticles[iTarget].color = c.color;
+			}
 		}
 		
 		target.SetParticles(targetParticles, nTargetParticles);
