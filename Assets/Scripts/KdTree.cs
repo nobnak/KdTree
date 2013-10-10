@@ -14,10 +14,12 @@ public class KdTree {
 	private Point build(int offset, int length, int depth) {
 		if (length == 0)
 			return null;
-		int axis = depth % 3;
+		int axis = findBestAxis(offset, length); //depth % 3;
 		System.Array.Sort<Vector3, int>(points, ids, offset, length, COMPS[axis]);
 		int mid = length >> 1;
-		return new Point(){ mid = offset + mid,
+		return new Point(){ 
+			mid = offset + mid,
+			axis = axis,
 			smaller = build(offset, mid, depth+1), 
 			larger = build(offset+mid+1, length - (mid+1), depth+1) };
 	}
@@ -28,7 +30,7 @@ public class KdTree {
 	private int nearest(Vector3 point, Point p, int depth) {
 		if (p == null)
 			return -1;
-		var axis = depth % 3;
+		var axis = p.axis; //depth % 3;
 		int leaf;
 		var dist2mid = points[p.mid][axis] - point[axis];
 		if (dist2mid > 0) {
@@ -57,16 +59,52 @@ public class KdTree {
 			return i0;
 		return sqDist(point, i0) < sqDist(point, i1) ? i0 : i1;
 	}
+	private int findBestAxis(int offset, int length) {
+		float minx, miny, minz, maxx, maxy, maxz;
+		minx = miny = minz = float.MaxValue;
+		maxx = maxy = maxz = float.MinValue;
+		for (var i = 0; i < length; i++) {
+			var p = points[i + offset];
+			if (p.x < minx)
+				minx = p.x;
+			else if (maxx < p.x)
+				maxx = p.x;
+			if (p.y < miny)
+				miny = p.y;
+			else if (maxy < p.y)
+				maxy = p.y;
+			if (p.z < minz)
+				minz = p.z;
+			else if (maxz < p.z)
+				maxz = p.z;
+		}
+		var size = new Vector3(maxx - minx, maxy - miny, maxz - minz);
+		if (size.x < size.y) {
+			if (size.y < size.z)
+				return AXIS_Z;
+			else
+				return AXIS_Y;
+		} else {
+			if (size.x < size.z)
+				return AXIS_Z;
+			else
+				return AXIS_X;
+		}
+	}
 	
 	private class Point {
 		public int mid;
+		public int axis;
 		public Point smaller;
 		public Point larger;
 	}
-
+	
+	private const int AXIS_X = 0;
+	private const int AXIS_Y = 1;
+	private const int AXIS_Z = 2;
 	private static readonly IComparer<Vector3>[] COMPS;
 	static KdTree() {
-		COMPS = new IComparer<Vector3>[]{ new AxisComparer(0), new AxisComparer(1), new AxisComparer(2)	};
+		COMPS = new IComparer<Vector3>[]{ new AxisComparer(AXIS_X), new AxisComparer(AXIS_Y), new AxisComparer(AXIS_Z)	};
 	}
 	private class AxisComparer : IComparer<Vector3> {
 		private int _axis;

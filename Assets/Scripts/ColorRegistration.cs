@@ -11,7 +11,8 @@ public class ColorRegistration : MonoBehaviour {
 	public Vector3[] normals;
 	public Color[] colors;
 	
-	public KdTree tree;
+	private KdTree _tree;
+	private Bounds _bounds;
 
 	// Use this for initialization
 	void Start () {
@@ -22,8 +23,11 @@ public class ColorRegistration : MonoBehaviour {
 		var tex = (Texture2D)mat.mainTexture;
 		colors = System.Array.ConvertAll(mesh.uv, (uv) => tex.GetPixelBilinear(uv.x, uv.y));
 		
-		tree = new KdTree();
-		tree.build(positions, Enumerable.Range(0, mesh.vertexCount).ToArray());
+		_tree = new KdTree();
+		_tree.build(positions, Enumerable.Range(0, mesh.vertexCount).ToArray());
+		
+		_bounds = model.renderer.bounds;
+		_bounds.Expand(2f * coloringDist);
 	}
 	
 	// Update is called once per frame
@@ -35,16 +39,14 @@ public class ColorRegistration : MonoBehaviour {
 				
 		for (var i = 0; i < particleCount; i++) {
 			var particle = particles[i];
-			var positionLocal = model.transform.InverseTransformPoint(particle.position);
-			var iNearest = tree.nearest(positionLocal);
-			if (iNearest < 0) {
-				particle.color = startColor;
-			} else {
-				var toMesh = positions[iNearest] - positionLocal;
-				if (sqrDist < toMesh.sqrMagnitude) {
-					particle.color = startColor;
-				} else {
-					particle.color = colors[iNearest];
+			particle.color = startColor;
+			if (_bounds.Contains(particle.position)) {
+				var positionLocal = model.transform.InverseTransformPoint(particle.position);
+				var iNearest = _tree.nearest(positionLocal);
+				if (iNearest >= 0) {
+					var toMesh = positions[iNearest] - positionLocal;
+					if (toMesh.sqrMagnitude < sqrDist)
+						particle.color = colors[iNearest];
 				}
 			}
 			particles[i] = particle;
